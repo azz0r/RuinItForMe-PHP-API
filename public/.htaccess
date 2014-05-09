@@ -1,0 +1,20 @@
+RewriteEngine on
+DirectoryIndex index.php
+Options Indexes FollowSymLinks
+
+
+# system/session
+RewriteRule ^([-A-Za-z0-9]+)/([-A-Za-z]+)$ index.php?__module=$1&__action=$2 [L,QSA]
+
+# teams/something/123456
+RewriteRule ([-A-Za-z0-9]+)/([-A-Za-z0-9]+)/([0-9a-fA-F]{24}+)$ index.php?__module=$1&__action=$2&id=$3 [L,QSA]
+
+# teams
+RewriteRule ^([-A-Za-z0-9]+)$ index.php?__module=$1&__action=index [L,QSA]
+
+# teams/123456
+RewriteRule ([-A-Za-z0-9]+)/([0-9a-fA-F]{24}+)$ index.php?__module=$1&__action=index&id=$2 [L,QSA]
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d

@@ -1,4 +1,4 @@
-RuinItForMe-PHP-API
-===================
+php-rest-api
+============
 
-PHP API for RuinItForMe.Com
+A free to use PHP REST API boilerplate. Adapted for use of my project. Created by Aaron Lote.
