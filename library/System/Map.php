@@ -7,11 +7,11 @@ class System_Map {
     public function __construct() {
         $this->map = array(
             'Spoiler' => array(
-                'accepted'      => array('_id', 'id', 'title', 'description', 'email', 'category', 'updated'),
+                'accepted'      => array('_id', 'id', 'title', 'description', 'email', 'category', 'platform', 'created', 'updated'),
                 'post_required' => array('title', 'description')
             ),
             'Category' => array(
-                'accepted'      => array('_id', 'id', 'title', 'description', 'updated'),
+                'accepted'      => array('_id', 'id', 'title', 'description', 'created', 'updated'),
                 'post_required' => array('title', 'description')
             )
         );
