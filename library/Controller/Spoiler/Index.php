@@ -74,7 +74,9 @@ class Controller_Spoiler_Index extends System_Controller {
         if (!empty($this->collection)) {
             $this->collection = !empty ($this->id) ? array($this->collection) : $this->collection;
             foreach ($this->collection as $document) {
-                $this->results[] = $this->map->get (self::tableName, $document);
+                $document = $this->map->get (self::tableName, $document);
+                $document->description = preg_replace('/<br \/>/iU', "\r\n"  , $document->description);
+                $this->results[] = $document;
             }
             $this->results = !empty($this->id) ? $this->results[0] : $this->results;
         }
@@ -86,9 +88,10 @@ class Controller_Spoiler_Index extends System_Controller {
 
         try {
             # only internal users can add a user
-            $document                   = $this->map->post('Spoiler', $this->vars);
-            $document->deleted          = false;
+            $document = $this->map->post('Spoiler', $this->vars);
+            $document->deleted = false;
             $document->created = $document->updated = new MongoDate();
+            $document->description = nl2br($document->description);
 
             if ($validationErrors = $this->map->validationErrors('Spoiler', $document, 'post')) {
                 return $this->setError (205, $validationErrors);
