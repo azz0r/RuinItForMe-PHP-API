@@ -112,64 +112,14 @@ class Controller_Spoiler_Index extends System_Controller {
     # update a document
     public function put() {
 
-        try {
-            # only admins can update Spoilers
-            if ($this->administrator) {
-                $originalDocument = $this->tableCollection->findOne(array('_id' => new MongoId($this->_getId())));
-
-                # objects not loaded, error
-                if (empty($originalDocument)) {
-                    return $this->setError(404);
-                }
-                # create the document
-                $document                   = $this->map->post('Spoiler', $this->vars);
-                $document->_id              = new MongoId($this->id);
-                $document->deleted          = $originalDocument['deleted'];
-                $document->created          = $originalDocument['created'];
-                $document->updated          = new MongoDate();
-
-                if ($validationErrors = $this->map->validationErrors('Spoiler', $document, 'put')) {
-                    return $this->setError (205, $validationErrors);
-                } else {
-                    if ($this->tableCollection->update(array('_id' => new MongoId($this->id)), $document, array('multiple' => false))) {
-                        return $document;
-                    } else {
-                        return $this->setError (210);
-                    }
-                }
-            } else {
-                return $this->setError (220);
-            }
-        } catch (Exception $e) {
-            $this->setError (230, array('thrown' => ($e->getMessage ()), 'sent' => $this->vars));
-
-        } catch (MongoCursorException $e) {
-            $this->setError (240, serialize (array_merge ($this->vars, array($e->getMessage ()))));
-        }
+        return false;
     }
 
 
     # delete an document
     public function delete() {
 
-        try {
-            if ($this->administrator === true) {
-                if (!empty($this->id)) {
-                    return $this->db->Spoiler->update(
-                        array('_id' => new MongoId($this->id)),
-                        array('$set' => array("deleted" => true)),
-                        array('multiple' => false)
-                    );
-                } else {
-                    return $this->setError (250);
-                }
-
-            } else {
-                return $this->setError (220);
-            }
-        } catch (MongoCursorException $e) {
-            $this->setError (240, serialize (array($e->getMessage ())));
-        }
+        return false;
     }
 
 
